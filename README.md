@@ -30,3 +30,5 @@ After this, I was ready to run the container. I had errors running the container
 Once everything was running, I created a new user for login purposes. To do this, I ran the command `docker compose run airflow-worker airflow users create --role Admin --username admin --email admin@example.com --firstname firstname --lastname lastname --password admin`. This is an example, you can change the values of the username, password, etc. to your liking.
 
 Once this was complete, I navigated to `localhost:8080`, logged in using my new credentials, and I could navigate around the Airflow GUI.
+
+To close down the container, I ran `docker compose down`.
