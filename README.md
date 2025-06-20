@@ -24,7 +24,30 @@ I then created a `.env` file in this same `airflow_docker` folder with the follo
 ```
 AIRFLOW_IMAGE_NAME=apache/airflow:3.0.0 
 AIRFLOW_UID=50000
+_PIP_ADDITIONAL_REQUIREMENTS=openpyxl
 ```
+
+I then created a `requirements.txt` file in the same `airflow_docker` folder with the following code:
+```
+# requirements.txt
+openpyxl
+```
+
+The last change I made was in `docker-compose.yaml`. In the `volumes` section, I added one line:
+```
+x-airflow-common:
+  &airflow-common
+
+  ...
+  
+  volumes:
+    - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
+    - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
+    - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
+    - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
+    - ${AIRFLOW_PROJ_DIR:-.}/requirements.txt:/requirements.txt  # this line
+```
+
 After this, I was ready to run the container. I had errors running the container in the VSCode terminal, but running it in the base Windows terminal did not throw these errors. To run I used the command `docker compose up -d` (I have a new version of Docker Compose so I don't use a hyphen in between docker and compose, for older versions, use `docker-compose up -d`).
 
 Once everything was running, I created a new user for login purposes. To do this, I ran the command `docker compose run airflow-worker airflow users create --role Admin --username admin --email admin@example.com --firstname firstname --lastname lastname --password admin`. This is an example, you can change the values of the username, password, etc. to your liking.
