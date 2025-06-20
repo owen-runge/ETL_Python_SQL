@@ -15,3 +15,6 @@ SELECT State, City, COUNT(CustomerID) AS CustomerCount
 FROM Customers
 GROUP BY State, City
 ORDER BY CustomerCount DESC;
+
+SELECT * FROM orders;
+SELECT * FROM products;
